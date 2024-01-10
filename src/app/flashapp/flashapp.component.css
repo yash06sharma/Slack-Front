@@ -1,0 +1,13 @@
+.back-color{
+  background-color:#4a154b;
+}
+.demobtn{
+ float: inline-start;
+}
+
+.demobtn img {
+  height: 100%;
+  /* height: -webkit-fill-available; */
+  width: 100%;
+  object-fit: cover;
+}

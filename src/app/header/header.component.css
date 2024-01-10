@@ -1,0 +1,16 @@
+.example-spacer {
+  flex: 1 1 auto;
+  color: white;
+
+}
+.back-color{
+  background-color:#4a154b;
+}
+.spacer {
+  color: white;
+  margin:05px;
+  /* padding: 05px 05px 0 0; */
+
+}
+
+
