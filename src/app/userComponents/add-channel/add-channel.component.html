@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>#Add Channel</h1>
+<!-- -------------Start Body Section------------ -->
+<div mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="Add Channel">
+      <div class="comform">
+        <form class="example-form">
+          <label for="power" class="mt-2">#Create Channel</label> &nbsp;<br>
+          <mat-form-field class="addchannel_form">
+            <mat-label>Channel Name</mat-label>
+            <input matInput placeholder="Ex. Software...">
+          </mat-form-field><br>
+          <div style="float: right; margin-right:30px; padding-right: 20px;">
+
+            <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> Add
+              <mat-icon><span class="material-symbols-outlined">
+                how_to_reg
+                </span></mat-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+
+
+
+    <mat-tab label="Member">
+        <mat-form-field class="addchannel_form">
+          <mat-label>Select community</mat-label>
+          <mat-select>
+            <ng-container *ngFor="let food of foods">
+              <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <hr class="hr-text" data-content="Add Channel's Member">
+        </div>
+        <mat-form-field class="addchannel_form">
+          <mat-label>Search User</mat-label>
+          <input matInput placeholder="Ex: Yash....">
+        </mat-form-field><br>
+
+        <mat-selection-list #shoes class="memberList">
+          <ng-container *ngFor="let shoe of typesOfShoes">
+            <mat-list-option>{{shoe}}</mat-list-option>
+          </ng-container>
+        </mat-selection-list>
+
+        <!-- <p>
+          Options selected: {{shoes.selectedOptions.selected.length}}
+        </p> -->
+
+    </mat-tab>
+
+
+
+
+
+    <mat-tab label="Setting">Setting</mat-tab>
+  </mat-tab-group>
+
+
+
+</div>
+
+<!-- --------------End body Section------ -->
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocus  Initial>Install</button> -->
+</mat-dialog-actions>

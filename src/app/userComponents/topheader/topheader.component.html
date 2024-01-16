@@ -1,0 +1,20 @@
+<mat-toolbar class="back-color">
+
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" routerLink="/">
+    <img src="./../../assets/images/slack_icon-removebg-preview.png" alt="Launch Image" height="30px">
+  </button>
+<div  class="example-spacer">
+  <span routerLink="/">Slack Messenger</span> &nbsp;
+  <!-- <button mat-stroked-button>Add Community</button> &nbsp; -->
+  <!-- <button mat-button (click)="openDialog()">Add/Update Community</button> -->
+
+  <button mat-icon-button color="light" aria-label="Example icon button with a heart icon"  (click)="openDialog()">
+    <mat-icon><span class="material-symbols-outlined">
+      border_color
+      </span></mat-icon>
+  </button>
+</div>
+  <button mat-stroked-button class="spacer" (click)="logoutUser()" >logout</button>
+</mat-toolbar>
+
+

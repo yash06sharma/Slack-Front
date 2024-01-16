@@ -1,0 +1,37 @@
+<!-- <div class="container-fluid">
+  <div class="row">
+    <app-topheader></app-topheader>
+  </div>
+  <div class="row">
+    <main>
+
+    </main>
+    <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+    <app-user-body>
+      [collapsed] = "isSideNavCollapsed"
+      [screenWidth] = "screenWidth"
+
+    </app-user-body>
+  </div>
+</div> -->
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <app-topheader></app-topheader>
+  </div>
+  <div class="row">
+    <main>
+      <app-sidenav></app-sidenav>
+      <app-user-body>
+        [collapsed] = "isSideNavCollapsed"
+        [screenWidth] = "screenWidth"
+
+      </app-user-body>
+    </main>
+  </div>
+</div>
+
+
+

@@ -12,5 +12,9 @@
   /* padding: 05px 05px 0 0; */
 
 }
+.fixed-header {
+  position: fixed;
+  z-index:999;
+  }
 
 

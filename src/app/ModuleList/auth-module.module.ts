@@ -10,17 +10,13 @@ import { DisplayauthComponent } from '../displayauth/displayauth.component';
 import { FlashappComponent } from '../flashapp/flashapp.component';
 
 const routes: Routes = [
+
   {
-    path: 'register',
-    component: RegisterComponentComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponentComponent
-  },
-  {
-    path: '',
-    component: DisplayauthComponent,
+    path: '', component: DisplayauthComponent, children: [
+      { path: '', component: FlashappComponent,},
+      { path: 'register', component: RegisterComponentComponent,},
+      { path: 'login',component: LoginComponentComponent},
+    ]
   }
 ];
 

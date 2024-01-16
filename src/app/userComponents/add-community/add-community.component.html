@@ -1,0 +1,90 @@
+<h2 mat-dialog-title>Community</h2>
+
+<mat-dialog-content class="mat-typography">
+  <mat-tab-group>
+
+    <mat-tab label="Add Community">
+
+
+      <div mat-dialog-content>
+
+       <div class="comform">
+        <form class="example-form">
+          <!-- <label for="power">Community Name</label> &nbsp; -->
+          <mat-form-field class="addcom_form">
+            <mat-label>Community Name</mat-label>
+            <input matInput placeholder="Ex. example@gmail.com...">
+          </mat-form-field><br>
+          <mat-form-field class="addcom_form">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Ex. Description..."></textarea>
+          </mat-form-field><br>
+          <div style="float: right; margin-right:30px; padding-right: 20px;">
+
+            <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon"> Add
+              <mat-icon><span class="material-symbols-outlined">
+                how_to_reg
+                </span></mat-icon>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      </div>
+
+       </mat-tab>
+
+       <!-- //-----------------End Add Community Secton----------- -->
+
+    <mat-tab label="Members">
+
+      <!-- <h4>#Community</h4> -->
+      <div class="row">
+<mat-form-field class="addcom_form">
+  <mat-label>Select community</mat-label>
+  <mat-select>
+    <ng-container *ngFor="let food of foods">
+      <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+    </ng-container>
+  </mat-select>
+</mat-form-field>
+</div>
+<div>
+  <hr class="hr-text" data-content="Add Member For Community">
+</div>
+<div class="row">
+  <mat-form-field class="addcom_form">
+    <mat-label>Search User</mat-label>
+    <input matInput placeholder="Ex: yash@gmail.com....">
+  </mat-form-field><br>
+</div>
+<div class="row">
+
+
+
+
+<mat-selection-list #shoes class="memberList">
+  <ng-container *ngFor="let shoe of typesOfShoes">
+    <mat-list-option>{{shoe}}</mat-list-option>
+  </ng-container>
+</mat-selection-list>
+
+<!-- <p>
+  Options selected: {{shoes.selectedOptions.selected.length}}
+</p> -->
+</div>
+
+
+
+    </mat-tab>
+
+    <!-- //---------------End Edit COmmunity Section------------------ -->
+
+    <mat-tab label="Setting"> Content 3 </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocus  Initial>Install</button> -->
+</mat-dialog-actions>
