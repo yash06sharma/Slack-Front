@@ -4,15 +4,20 @@
   <mat-tab-group>
     <mat-tab label="Add Channel">
       <div class="comform">
-        <form class="example-form">
+        <form class="example-form" [formGroup]="createChannelForm" novalidate>
           <label for="power" class="mt-2">#Create Channel</label> &nbsp;<br>
           <mat-form-field class="addchannel_form">
             <mat-label>Channel Name</mat-label>
-            <input matInput placeholder="Ex. Software...">
-          </mat-form-field><br>
+            <input matInput placeholder="Ex. Software..." formControlName="ch_name">
+          </mat-form-field>
+
+    <div class="err" *ngIf="submitted && CH['ch_name'].errors && CH['ch_name'].touched">
+      <div class="err" style="color: red;" *ngIf="CH['ch_name'].errors['required']">This field is required</div>
+    </div><br>
+
           <div style="float: right; margin-right:30px; padding-right: 20px;">
 
-            <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon"> Add
+            <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon" (click)="submit_Channel_btn()"> Add
               <mat-icon><span class="material-symbols-outlined">
                 how_to_reg
                 </span></mat-icon>
@@ -26,8 +31,8 @@
 
     <mat-tab label="Member">
         <mat-form-field class="addchannel_form">
-          <mat-label>Select community</mat-label>
-          <mat-select>
+          <mat-label>Select Channels</mat-label>
+          <mat-select (selectionChange)="selectChannel($event.value)">
             <ng-container *ngFor="let food of foods">
               <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
             </ng-container>
@@ -38,14 +43,25 @@
         </div>
         <mat-form-field class="addchannel_form">
           <mat-label>Search User</mat-label>
-          <input matInput placeholder="Ex: Yash....">
+          <input matInput placeholder="Ex: Yash...." (keyup)="memberFilter($event)">
         </mat-form-field><br>
 
-        <mat-selection-list #shoes class="memberList">
-          <ng-container *ngFor="let shoe of typesOfShoes">
-            <mat-list-option>{{shoe}}</mat-list-option>
-          </ng-container>
-        </mat-selection-list>
+
+        <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="onNgModelChange($event)">
+          <mat-list-option *ngFor="let user of users" [value]="user.id">
+            {{user.name}}
+          </mat-list-option>
+      </mat-selection-list>
+
+        <div style="float: right; padding-right: 20px;">
+
+          <button mat-icon-button color="warn" aria-label="E+xample icon button with a heart icon" (click)="addUserOnClick()">Add
+            <mat-icon><span class="material-symbols-outlined">
+              how_to_reg
+              </span></mat-icon>
+          </button>
+
+          </div>
 
         <!-- <p>
           Options selected: {{shoes.selectedOptions.selected.length}}

@@ -7,8 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { AddCommunityComponent } from './userComponents/add-community/add-community.component';
-import { AddChannelComponent } from './userComponents/add-channel/add-channel.component';
+import { AuthServiceService } from './servicess/auth-service.service';
+import { SelectedCommunityComponent } from './userComponents/selected-community/selected-community.component';
 
 const matFuntion = [
   MatToolbarModule, MatButtonModule, MatIconModule
@@ -18,6 +18,7 @@ const matFuntion = [
 @NgModule({
   declarations: [
     AppComponent,
+
 
 
 

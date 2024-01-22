@@ -5,6 +5,8 @@
 }
 .back-color{
   background-color:#4a154b;
+  width: 100%;
+  /* position: absolute; */
 }
 .spacer {
   color: white;
@@ -12,9 +14,10 @@
   /* padding: 05px 05px 0 0; */
 
 }
-.fixed-header {
+/* .fixed-header {
   position: fixed;
+  width: 100%;
   z-index:999;
-  }
+  } */
 
 

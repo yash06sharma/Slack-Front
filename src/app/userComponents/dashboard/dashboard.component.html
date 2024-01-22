@@ -5,24 +5,23 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
-      <ng-container *ngFor="let comm of community_data">
-        <div class="card" style="width: 18rem;">
+    <ng-container *ngFor="let comm of community_data">
+      <div class="col-sm-4">
+
+        <div class="card" style="width: 18rem; height: 13rem;">
           <div class="card-body">
-            <h4 class="card-title">{{comm.name}}</h4>
+            <h4 class="card-title">{{comm.Name}}</h4>
             <div class="">
-              <h5 class="card-subtitle mb-1 text-muted">Community Channels: {{comm.channel}}</h5>
-              <h5 class="card-subtitle mb-2 text-muted">Community Members:- {{comm.member}}</h5>
+              <h5 class="card-subtitle mb-2 text-muted">Community Members:- {{comm.Members}}</h5>
+              <h5 class="card-subtitle mb-1 text-muted">Channels: {{comm.Channels}}</h5>
             </div>
-            <p class="card-text"> {{comm.description}}</p>
-            <a href="#" class="card-link">Select Community{{comm.id}}</a>
-            <!-- <a href="#" class="card-link">Another link</a> -->
+            <p class="card-text"> {{comm.Description}}</p>
+            <a class="card-link"(click)="selected_community(comm.id)">Select Community{{comm.id}}</a>
           </div>
         </div>
+      </div>
       </ng-container>
 
-
-    </div>
   </div>
 </div>
 

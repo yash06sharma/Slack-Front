@@ -11,6 +11,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import { MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatListModule} from '@angular/material/list';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
+
+
+
 
 
 
@@ -21,11 +28,13 @@ const matFuntion = [
   FormsModule,MatInputModule,MatFormFieldModule,
   MatMenuModule,MatDialogModule,
   MatTabsModule,MatSelectModule,
-  MatListModule,
+  MatListModule,MatCheckboxModule,
+  MatRadioModule,MatSlideToggleModule,
 ]
 
 @NgModule({
   declarations: [
+
 
   ],
   imports: [

@@ -12,21 +12,40 @@
   </div>
   <div class="d-flex justify-content-center">
 
-    <form class="example-form">
+    <form class="example-form" [formGroup]="RegistrationForm" novalidate>
+
       <mat-form-field class="example-full-width">
         <mat-label>Name</mat-label>
-        <input matInput placeholder="Ex. example@gmail.com...">
+        <input matInput placeholder="Ex. example@gmail.com..." formControlName="name">
       </mat-form-field>
+    <div *ngIf="submitted && f['name'].errors && f['name'].touched">
+      <div style="color: red;" *ngIf="f['name'].errors['required']">This field is required</div>
+
+    </div>
+
+
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Ex. example@gmail.com...">
+        <input matInput placeholder="Ex. example@gmail.com..." formControlName="email">
       </mat-form-field>
+      <div *ngIf="submitted && f['email'].errors && f['email'].touched">
+        <div style="color: red;" *ngIf="f['email'].errors['required']">This field is required</div>
+      </div>
+            <div style="color: red;" *ngIf="f['email'].errors?.pattern">Please enter valid email address</div>
+
       <mat-form-field class="example-full-width">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Ex. ******" type="password">
+        <input matInput placeholder="Ex. ******" type="password" formControlName="password">
       </mat-form-field>
-      <button type="button" class="register_button">Submit Your Data</button>
+
+      <div *ngIf="submitted && f['password'].errors && f['password'].touched">
+        <div style="color: red;" *ngIf="f['password'].errors['required']">This field is required</div>
+
+      </div>
+      <button type="submit" class="register_button" (click)="addUserRecord()">Submit Your Data</button>
+
     </form>
+
 
   </div>
 

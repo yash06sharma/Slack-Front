@@ -13,6 +13,12 @@ import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { TopheaderComponent } from '../userComponents/topheader/topheader.component';
 import { AddCommunityComponent } from '../userComponents/add-community/add-community.component';
 import { AddChannelComponent } from '../userComponents/add-channel/add-channel.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { UserServiceService } from '../servicess/user-service.service';
+import { SelectedCommunityComponent } from '../userComponents/selected-community/selected-community.component';
+
+
 
 
 const routes: Routes = [
@@ -20,6 +26,7 @@ const routes: Routes = [
     path: '', component: UserBaseComponent, children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full',},
       { path: 'dashboard', component: DashboardComponent,},
+      { path: 'community', component: SelectedCommunityComponent,},
       { path: 'channels/:id', component: ChannelsComponent,},
       { path: 'members/:id', component: MembersComponent,},
 ]}
@@ -37,14 +44,15 @@ const routes: Routes = [
     TopheaderComponent,
     AddCommunityComponent,
     AddChannelComponent,
+    SelectedCommunityComponent,
   ],
   imports: [
     CommonModule,
-    MatUIModuleModule,
+    MatUIModuleModule,HttpClientModule,ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule,],
-  providers: []
+  providers: [UserServiceService]
 
 })
 export class UserModuleModule { }

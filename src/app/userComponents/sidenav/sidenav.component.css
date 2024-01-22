@@ -131,7 +131,12 @@ width: 100%;
 }
 
 
-/* .nav-add-channel{
+.channelHide{
+  display: none;
+}
+
+
+.nav-add-channel{
   display: flex;
   align-items: center;
   height: 3rem;
@@ -140,4 +145,4 @@ width: 100%;
   text-decoration: none;
   border-radius: 0.625rem;
   transition: all .3s ease;
-} */
+}

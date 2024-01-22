@@ -10,7 +10,7 @@
     <p class="heading-text">example.slack.com</p>
 </div>
   <div class="d-flex justify-content-center mt-1">
-    <button type="button" class="sign_in_button">Sign in with Google</button>
+    <button type="submit" class="sign_in_button">Sign in with Google</button>
   </div>
 
   <div>
@@ -19,16 +19,28 @@
 
   <div class="d-flex justify-content-center">
 
-    <form class="example-form">
+    <form class="example-form" [formGroup]="loginForm" novalidate>
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Ex. example@gmail.com...">
+        <input matInput placeholder="Ex. example@gmail.com..." formControlName="emailID">
       </mat-form-field>
+
+      <div *ngIf="submitted && log['emailID'].errors && log['emailID'].touched">
+        <div style="color: red;" *ngIf="log['emailID'].errors['required']">This field is required</div>
+      </div>
+      <div style="color: red;" *ngIf="log['emailID'].errors?.pattern">Please enter valid email address</div>
+
+
       <mat-form-field class="example-full-width">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Ex. ******" type="password">
+        <input matInput placeholder="Ex. ******" type="password" formControlName="passwordID">
       </mat-form-field>
-      <button type="button" class="log_in_button">Log in with Email</button>
+
+      <div *ngIf="submitted && log['passwordID'].errors && log['passwordID'].touched">
+        <div style="color: red;" *ngIf="log['passwordID'].errors['required']">This field is required</div>
+      </div>
+
+      <button type="submit" class="log_in_button" (click)="loginUserRecord()">Log in with Email</button>
     </form>
 
   </div>

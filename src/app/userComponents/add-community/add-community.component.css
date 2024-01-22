@@ -80,4 +80,41 @@
     width: 100%;
     margin-top: 0px;
     padding: 0px 0px;
+    /* background-color: brown; */
 }
+.list{
+  background-color: aqua;
+}
+
+
+.mat-list-item{
+  display: flex;
+  justify-content: space-between;
+  background-color: aqua;
+  align-items: center;
+}
+ .radio-container {
+  display: flex;
+  justify-content: flex-end;
+  background-color: #263238;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+}
+
+.success{
+  display: none;
+}
+
+.hideText{
+  display: none;
+}
+.showTextBody{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

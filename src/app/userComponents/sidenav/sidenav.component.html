@@ -37,7 +37,7 @@
 
   <ul class="sidenav-nav">
       <li class="sidenav-nav-item" *ngFor="let x of navData">
-        <div *ngIf="x.items.length == 0">
+        <div *ngIf="x.items.length == 0 && x.routeLink != null">
           <a [routerLink]="[x.routeLink]"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidenav-nav-link">
             <i class="sidenav-link-icon" [class]="[x.icon]"></i>
           <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{x.label}}</span>
@@ -55,7 +55,6 @@
         </div>
 
                 <ul class="subMenu">
-                  <!-- <li><a class="link_name">{{x.label}}</a></li> -->
                   <li *ngFor="let item_sub of x.items">
                     <a [routerLink]="[item_sub.routeLink, item_sub.id]" class="sidenav-nav-subitem-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                   <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{item_sub.label}}</span>
@@ -65,7 +64,7 @@
 
       </li>
 
-      <div>
+      <div [ngClass]="chennel_disp ? 'channelHide' : 'nav-add-channel'">
         <a class="sidenav-nav-link" (click)="openDialog()">
               <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">Add Channel</span>
 

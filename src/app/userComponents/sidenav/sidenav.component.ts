@@ -58,21 +58,15 @@ export class SidenavComponent implements OnInit {
 
   //--------------Nav Data Practicle-------------
 
-    channeldata = [
-    // { id: '', icon: '', routeLink: '', label: ' ' },
-    { id: 2, icon: '2', routeLink: 'channels', label: 'channel 2' },
-    // { id: 3, icon: '3', routeLink: 'channels', label: 'channel 3' },
-    // { id: 4, icon: '4', routeLink: 'channels', label: 'channel 4' },
-    // { id: 5, icon: '5', routeLink: 'channels', label: 'channel 5' },
-  ];
+    channeldata:{ id: number, icon: string, routeLink: string, label:string }[] = [
+      // { id: 1, icon: '1', routeLink: 'members', label: 'user1' },
+      // { id: 2, icon: '2', routeLink: 'members', label: 'user2' },
+    ];
+    userdata: { id: number; icon: string; routeLink: string, label:string }[] = [
+      // { id: 1, icon: '1', routeLink: 'members', label: 'user1' },
+      //   { id: 2, icon: '2', routeLink: 'members', label: 'user2' },
+    ];
 
-  userdata = [
-    { id: 1, icon: '1', routeLink: 'members', label: 'user1' },
-    // { id: 2, icon: '2', routeLink: 'members', label: 'user2' },
-    // { id: 3, icon: '2', routeLink: 'members', label: 'user3' },
-    // { id: 4, icon: '2', routeLink: 'members', label: 'user4' },
-    // { id: 5, icon: '2', routeLink: 'members', label: 'user5' },
-  ];
 
   navData : {routeLink: any, icon: string, label: string, items: NavItem[] }[] = [
     {
@@ -130,15 +124,6 @@ export class SidenavComponent implements OnInit {
         this.navData[1].items.push(newItem);
       });
     }
-    // else{
-    //   const newItem: NavItem = {
-    //     id: '',
-    //     routeLink: '',
-    //     icon: '',
-    //     label: '',
-    //   };
-    //   this.navData[1].items.push(newItem);
-    // }
 
 
     this.userdata.forEach(element => {
@@ -205,6 +190,7 @@ select(item: any, text:string): void {
 
 //---------------Add Cannels code-------------
 
+chennel_disp: boolean = false;
 openDialog(){
   const dialogRef = this.dialog.open(AddChannelComponent);
   dialogRef.afterClosed().subscribe(result => {

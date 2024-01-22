@@ -9,19 +9,28 @@
       <div mat-dialog-content>
 
        <div class="comform">
-        <form class="example-form">
-          <!-- <label for="power">Community Name</label> &nbsp; -->
+        <form class="example-form" [formGroup]="registerCommunity" novalidate>
           <mat-form-field class="addcom_form">
             <mat-label>Community Name</mat-label>
-            <input matInput placeholder="Ex. example@gmail.com...">
-          </mat-form-field><br>
+            <input matInput placeholder="Ex. example@gmail.com..." formControlName="name">
+          </mat-form-field>
+
+          <div class="err" *ngIf="submitted && f['name'].errors && f['name'].touched">
+            <div class="err" style="color: red;" *ngIf="f['name'].errors['required']">This field is required</div>
+          </div><br>
+
           <mat-form-field class="addcom_form">
             <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Ex. Description..."></textarea>
-          </mat-form-field><br>
+            <textarea matInput placeholder="Ex. Description..." formControlName="description"></textarea>
+          </mat-form-field>
+
+          <div class="err"  *ngIf="submitted && f['description'].errors && f['description'].touched">
+            <div class="err" style="color: red;" *ngIf="f['description'].errors['required']">This field is required</div>
+          </div><br>
+
           <div style="float: right; margin-right:30px; padding-right: 20px;">
 
-            <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon"> Add
+            <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon" (click)="submitCommunityBTN()"> Add
               <mat-icon><span class="material-symbols-outlined">
                 how_to_reg
                 </span></mat-icon>
@@ -35,53 +44,130 @@
 
        </mat-tab>
 
+<div class="row">
+  <mat-tab label="Channels">
+
+  <h3>#{{community_name}}:</h3>
+
+<br>
+
+<div>
+  <hr class="hr-text" data-content="Create Channel">
+</div>
+<div class="comform">
+  <form class="example-form" [formGroup]="registerChannel" novalidate>
+    <mat-form-field class="addcom_form">
+      <mat-label>Channel Name</mat-label>
+      <input matInput placeholder="Ex. example@gmail.com..." formControlName="namech">
+    </mat-form-field>
+
+    <div class="err" *ngIf="submitted && RC['namech'].errors && RC['namech'].touched">
+      <div class="err" style="color: red;" *ngIf="RC['namech'].errors['required']">This field is required</div>
+    </div><br>
+
+    <div style="float: right; margin-right:30px; padding-right: 20px;">
+
+      <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon" (click)="submitChannelBTN()"> Add
+        <mat-icon><span class="material-symbols-outlined">
+          how_to_reg
+          </span></mat-icon>
+      </button>
+    </div>
+
+  </form>
+</div>
+
+  </mat-tab>
+
+</div>
+
+
        <!-- //-----------------End Add Community Secton----------- -->
 
     <mat-tab label="Members">
 
-      <!-- <h4>#Community</h4> -->
+      <h3>#{{community_name}}:</h3>
       <div class="row">
 <mat-form-field class="addcom_form">
-  <mat-label>Select community</mat-label>
-  <mat-select>
+  <mat-label>Select Channel</mat-label>
+  <mat-select (selectionChange)="someMethod($event.value)">
     <ng-container *ngFor="let food of foods">
       <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
     </ng-container>
   </mat-select>
 </mat-form-field>
 </div>
+<small class="text-muted" [ngClass]="textdisplay ? 'hideText' : 'showTextBody'">Please Select to Add Member</small>
 <div>
-  <hr class="hr-text" data-content="Add Member For Community">
+  <hr class="hr-text" data-content="Add Member For Community" [ngClass]="status ? 'success' : 'danger'">
 </div>
-<div class="row">
+<!-- //-------------Search And Table--------------- -->
+
+
+<div [ngClass]="status ? 'success' : 'danger'">
   <mat-form-field class="addcom_form">
     <mat-label>Search User</mat-label>
-    <input matInput placeholder="Ex: yash@gmail.com....">
+    <input matInput placeholder="Ex: yash@gmail.com...." (keyup)="applyFilter($event)">
   </mat-form-field><br>
 </div>
-<div class="row">
+
+<div [ngClass]="status ? 'success' : 'danger'">
+
+<!-- //----------------------_Start Trail--------------------- -->
 
 
+<table class="table">
+  <thead>
+    <tr>
+      <!-- <th scope="col">#</th> -->
+      <th scope="col">Name</th>
+      <th scope="col">Team Leader</th>
+      <th scope="col">Community User</th>
+      <th scope="col">Guest User</th>
+    </tr>
+  </thead>
+  <tbody>
 
 
-<mat-selection-list #shoes class="memberList">
-  <ng-container *ngFor="let shoe of typesOfShoes">
-    <mat-list-option>{{shoe}}</mat-list-option>
-  </ng-container>
-</mat-selection-list>
+    <tr *ngFor="let user of users">
+      <td>{{ user.name }}</td>
+      <td>
+        <label>
+          <input type="radio" name="{{ user.id }}" id="radio_btn" value="team_leader" [(ngModel)]="user.role">
+        </label>
+      </td>
+      <td>
+        <label>
+          <input type="radio" name="{{ user.id }}" id="radio_btn" value="community_user" [(ngModel)]="user.role">
+        </label>
+      </td>
+      <td>
+        <label>
+          <input type="radio" name="{{ user.id }}" id="radio_btn" value="guest_user" [(ngModel)]="user.role">
+        </label>
+      </td>
+    </tr>
 
-<!-- <p>
-  Options selected: {{shoes.selectedOptions.selected.length}}
-</p> -->
+  </tbody>
+</table>
+
+<!-- ----------------_End Trial-------------------------- -->
 </div>
+<div style="float: right; margin-right:50px; padding-right: 20px;" [ngClass]="status ? 'success' : 'danger'">
 
+  <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon" (click)="handleButtonClick()">Invite Users
+    <mat-icon><span class="material-symbols-outlined">
+      how_to_reg
+      </span></mat-icon>
+  </button>
+
+  </div>
 
 
     </mat-tab>
 
     <!-- //---------------End Edit COmmunity Section------------------ -->
 
-    <mat-tab label="Setting"> Content 3 </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

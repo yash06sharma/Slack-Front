@@ -8,6 +8,9 @@ import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 import { DisplayauthComponent } from '../displayauth/displayauth.component';
 import { FlashappComponent } from '../flashapp/flashapp.component';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { AuthServiceService } from '../servicess/auth-service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
 
@@ -32,9 +35,10 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    MatUIModuleModule,
-    RouterModule.forChild(routes)
+    MatUIModuleModule,ReactiveFormsModule,
+    RouterModule.forChild(routes),HttpClientModule,ReactiveFormsModule
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthServiceService]
 })
 export class AuthModuleModule { }
