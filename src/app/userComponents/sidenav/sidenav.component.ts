@@ -1,8 +1,10 @@
 import { AddChannelComponent } from './../add-channel/add-channel.component';
-import { Component, OnInit, Output, EventEmitter, HostListener, ViewChild, ElementRef,  } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener, ViewChild, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef  } from '@angular/core';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { MatMenu, MatMenuItem } from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
+import { UserServiceService } from 'src/app/servicess/user-service.service';
+import { Subject } from 'rxjs';
 
 interface SidenavToggle{
   screenWidth: number;
@@ -16,10 +18,12 @@ interface NavItem {
   id: any;
 }
 
+
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations:[
     trigger('fadeInOut', [
       transition(':enter',[
@@ -48,7 +52,7 @@ interface NavItem {
 
   ]
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit{
 
   @Output() onToggleSideNav: EventEmitter<SidenavToggle> = new EventEmitter();
 
@@ -102,12 +106,55 @@ export class SidenavComponent implements OnInit {
 
   }
 
-  constructor(private dialog:MatDialog) { }
+  constructor(private dialog:MatDialog, private db:UserServiceService, private _changeDetectorRef:ChangeDetectorRef) {
+
+    this.getChaanelData();
+
+
+   }
+
+   getChaanelData(){
+     this.db.ch_subject.subscribe((result:any[])=>{
+       if(result[0]){
+         this.channeldata = result[0]['Channels'].map((element: any)=>{
+           return {
+             id: element.ChannelID,
+             icon: '0',
+                        routeLink: 'members',
+                        label: element.ChannelName,
+                      };
+      });
+      this.userdata = result[0]['CommunityMembers'].map((element: any)=>{
+        return {
+                   id: element.ID,
+                   icon: '0',
+                   routeLink: 'members',
+                   label: element.Name,
+                 };
+                });
+              }
+              console.log(this.channeldata);
+              console.log(this.userdata);
+              this.addDataToNavData();
+              // this._changeDetectorRef.detectChanges();
+  });
+
+
+   }
+
+
+
+
+
+
+
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.addDataToNavData();
     this.add_Community_menuItem();
+     console.log(this.channeldata);
+
 
   }
 
@@ -123,6 +170,7 @@ export class SidenavComponent implements OnInit {
 
         this.navData[1].items.push(newItem);
       });
+
     }
 
 
@@ -137,6 +185,9 @@ export class SidenavComponent implements OnInit {
       this.navData[2].items.push(newItem);
     });
 
+
+    this._changeDetectorRef.detectChanges();
+    this._changeDetectorRef.markForCheck();
   }
 
   togglecollapse(){
@@ -163,25 +214,24 @@ export class SidenavComponent implements OnInit {
 selected: any;
 menuItems: Array<{ text: string; id: number; elementRef?: MatMenu }> = [];
 
-add_Community_menuItem(){
-  for (let i = 0; i <= this.metItemData.length; i++) {
-    const menuItem = {
-      text: this.metItemData[i].communityName,
-      id: this.metItemData[i].id,
-      elementRef: undefined
-    };
+add_Community_menuItem() {
+  if (this.metItemData && this.metItemData.length > 0) {
+    for (let i = 0; i < this.metItemData.length; i++) {
+      const menuItem = {
+        text: this.metItemData[i].communityName,
+        id: this.metItemData[i].id,
+        elementRef: undefined
+      };
 
-    this.menuItems.push(menuItem);
+      this.menuItems.push(menuItem);
+    }
   }
 }
 
-// comm_select:boolean = false;
 comm_name:string = 'Software';
 
 select(item: any, text:string): void {
-  // Your selection logic here
   this.selected = item;
-  // this.comm_select = true;
   this.comm_name = text;
   console.log(this.selected + text, "Data from mat icon");
 
@@ -200,3 +250,4 @@ openDialog(){
 
 
 }
+

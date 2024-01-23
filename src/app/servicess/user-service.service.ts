@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +30,14 @@ export class UserServiceService {
     return this.http.get('http://127.0.0.1:8000/api/community/'+id);
 
   }
+
+
+
+
+
+  //--------------Inside APP Using Servicess----------------
+
+  ch_subject = new Subject<any>();
+  // ch_subject: BehaviorSubject<any> = new BehaviorSubject<any>();
+
 }

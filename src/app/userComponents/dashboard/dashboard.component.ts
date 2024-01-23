@@ -46,10 +46,23 @@ show_community(){
 }
 
 
+ CommunityItem:any[] = [];
+
 selected_community(ID:number){
   this.db.show_SelectedCommunity_Data(ID).subscribe((res:any)=>{
-    console.log(res);
-  this.router.navigate(['/user/community'], { queryParams: { data: "Yash" }});
+    // console.log(res['community'][0]);
+    var communityData = res['community'][0];
+
+     this.CommunityItem = [{
+      id: communityData.id,
+      Name: communityData.Name,
+      Description: communityData.Description,
+      CommunityMembers: communityData.CommunityMembers,
+      Channels: communityData.Channels,
+    }];
+
+    this.db.ch_subject.next(this.CommunityItem);
+    // console.log(this.CommunityItem);
 
   });
 
