@@ -1,1 +1,19 @@
-<p>selected-community works!</p>
+<!-- <p>selected-community works!</p> -->
+
+<div class="container">
+  <div class="row" *ngIf="queryData">
+
+
+    <div *ngFor="let data of queryData">
+      <h2>👋 Welcome to the # {{ data.Name }}</h2>
+        <p>
+          This community is for everything #project. Hold meetings, share docs and make decisions together with your team. Edit description
+        </p>
+
+      <p>We wellcome You Mr, {{ data.Created_by }}</p>
+    </div>
+  </div>
+  <div class="row">
+
+  </div>
+</div>

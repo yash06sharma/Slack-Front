@@ -15,33 +15,10 @@ export class AddCommunityComponent implements OnInit {
   constructor(private fb:FormBuilder, private db:UserServiceService) { }
 
   ngOnInit(): void {
+    this.getdataForCommunityMember();
     this.addCommunityForm();
-    console.log(this.userRecord);
-    this.merge_data();
     this.addChannelForm();
   }
-  selectedValue: string = '';
-
-  foods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
-
-  typesOfShoes: string[] = ['Yash', 'Suresh', 'Diptesh', 'Max', 'Anand'];
-
-  onSelection(data:any){
-      console.log(data.option.selected);
-  }
-
-  userRecord: any[] = [
-    {id: 1, name: 'Yash', Role:'06yashsharma@gmail.com'},
-    {id: 2, name: 'Suresh', Role:'suresh@gmail.com'},
-    {id: 3, name: 'Safal', Role:'safal@gmail.com'},
-    {id: 4, name: 'Diptesh', Role:'diptesh@gmail.com'},
-    {id: 5, name: 'Jayant', Role:'jayant@gmail.com'},
-
-  ];
 
 
   addCommunityForm(){
@@ -120,45 +97,42 @@ community_name_AfterCreate(){
       console.log(res);
     });
 
-
-    // console.log(this.registerChannel.value.namech,this.community_ID);
-
     this.registerChannel.reset();
   }
 
+//-------------Select Member-----------
 
-  data = [
-    { id: 1, name: 'Yash',email:'06yashsharma@gmail.com'},
-    { id: 2, name: 'Safal',email:'safal@gmail.com'},
-    { id: 3, name: 'Jayant',email:'jayant@gmail.com'},
-    { id: 4, name: 'Ranu',email:'ranu@gmail.com'},
-    { id: 5, name: 'Jasmin',email:'jasmin@gmail.com'},
 
-  ];
+  data:{ id: number; name: string; email:string }[]  = [];
+  users: { id: number; name: string; role: string, email:string }[] = [];
+
+  getdataForCommunityMember(){
+    this.db.get_FrstCommunity_Created_Member().subscribe((res:any)=>{
+      this.data = res.Data;
+      this.merge_data();
+
+    })
+  }
 
   merge_data(){
-    const work = this.data
-    .map(data => ({ id: data.id, name:data.name, role: '', email:data.email}));
-    this.users = work;
+      this.users  = this.data
+      .map(data => ({ id: data.id, name:data.name, role: '', email:data.email}));
   }
 
   applyFilter(data: any) {
     const foundUser = this.data.find(user => user.email === data.target.value);
-
-    if (foundUser) {
-      this.search = [
-        { id: foundUser.id, name: foundUser.name, role: '', email: foundUser.email }
-      ];
-      this.users = this.search
-    } else {
-      // this.search = []; // Set to an empty array if no matching user is found
-      this.merge_data();
-    }
+        if (foundUser) {
+          this.users = [
+            { id: foundUser.id, name: foundUser.name, role: '', email: foundUser.email }
+          ];
+        } else {
+          this.merge_data();
+        }
   }
 
+  //-------------Select Member End-----------
 
-  users: { id: number; name: string; role: string, email:string }[] = [];
-  search: { id: number; name: string; role: string, email:string }[] = [];
+
 
 
   channel_Id:any= 1;
@@ -171,16 +145,27 @@ community_name_AfterCreate(){
 
   }
 
-  textdisplay:boolean = false;
-
-  status: boolean = true;
-  someMethod(data:any){
-    this.status = false;
-    this.textdisplay = true;
-    console.log(data);
-    // if()
-  }
-
-
-
 }
+
+
+  // textdisplay:boolean = false;
+
+  // status: boolean = true;
+  // someMethod(data:any){
+  //   this.status = false;
+  //   this.textdisplay = true;
+  //   console.log(data);
+  // }
+
+// selectedValue: string = '';
+  // foods = [
+  //   {value: 'steak-0', viewValue: 'Steak'},
+  //   {value: 'pizza-1', viewValue: 'Pizza'},
+  //   {value: 'tacos-2', viewValue: 'Tacos'},
+  // ];
+
+  // typesOfShoes: string[] = ['Yash', 'Suresh', 'Diptesh', 'Max', 'Anand'];
+
+  // onSelection(data:any){
+  //     console.log(data.option.selected);
+  // }

@@ -31,6 +31,14 @@ export class UserServiceService {
 
   }
 
+  get_FrstCommunity_Created_Member(){
+    return this.http.get('http://127.0.0.1:8000/api/user/community_member/');
+  }
+
+
+
+
+
 
 
 
@@ -38,6 +46,5 @@ export class UserServiceService {
   //--------------Inside APP Using Servicess----------------
 
   ch_subject = new Subject<any>();
-  // ch_subject: BehaviorSubject<any> = new BehaviorSubject<any>();
-
+  // add_channleSubject = new Subject<any>();
 }

@@ -7,37 +7,19 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./selected-community.component.css']
 })
 export class SelectedCommunityComponent implements OnInit {
-queryData:any = [];
-  // constructor(private route:ActivatedRoute) {
-  //   this.route.queryParamMap.subscribe((param:any)=>{
-  //     // console.log(param['params']);
-  //     this.queryData = param['params'];
-  //     this.queryData.forEach(element => {
-  //       console.log(element);
-  //     });
-  //   });
-
-  //  }
+queryData:any[] = [];
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParamMap.subscribe((param: any) => {
-      const dataParam = param['params'];
-      // console.log(this.queryData);
-      // const dataParam = param.get('data');
-      // if (dataParam) {
-      //   this.queryData = JSON.parse(dataParam);
-
-      // }
+      this.queryData = [{
+        Name: param['params']['Name'],
+        Created_by: param['params']['Created_by'],
+      }];
     });
   }
 
   ngOnInit(): void {
-
-// console.log(this.queryData['Name']);
-// console.log(this.queryData['Description']);
-
-
-
+    console.log(this.queryData);
   }
 
 }

@@ -4,10 +4,7 @@
   <mat-tab-group>
 
     <mat-tab label="Add Community">
-
-
       <div mat-dialog-content>
-
        <div class="comform">
         <form class="example-form" [formGroup]="registerCommunity" novalidate>
           <mat-form-field class="addcom_form">
@@ -87,32 +84,19 @@
     <mat-tab label="Members">
 
       <h3>#{{community_name}}:</h3>
-      <div class="row">
-<mat-form-field class="addcom_form">
-  <mat-label>Select Channel</mat-label>
-  <mat-select (selectionChange)="someMethod($event.value)">
-    <ng-container *ngFor="let food of foods">
-      <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
-    </ng-container>
-  </mat-select>
-</mat-form-field>
-</div>
-<small class="text-muted" [ngClass]="textdisplay ? 'hideText' : 'showTextBody'">Please Select to Add Member</small>
-<div>
-  <hr class="hr-text" data-content="Add Member For Community" [ngClass]="status ? 'success' : 'danger'">
-</div>
+
 <!-- //-------------Search And Table--------------- -->
 
-
-<div [ngClass]="status ? 'success' : 'danger'">
+<!-- [ngClass]="status ? 'success' : 'danger'" -->
+<div>
   <mat-form-field class="addcom_form">
     <mat-label>Search User</mat-label>
     <input matInput placeholder="Ex: yash@gmail.com...." (keyup)="applyFilter($event)">
   </mat-form-field><br>
 </div>
 
-<div [ngClass]="status ? 'success' : 'danger'">
-
+<div>
+  <!-- [ngClass]="status ? 'success' : 'danger'" -->
 <!-- //----------------------_Start Trail--------------------- -->
 
 
@@ -153,7 +137,8 @@
 
 <!-- ----------------_End Trial-------------------------- -->
 </div>
-<div style="float: right; margin-right:50px; padding-right: 20px;" [ngClass]="status ? 'success' : 'danger'">
+<!-- [ngClass]="status ? 'success' : 'danger'" -->
+<div style="float: right; margin-right:50px; padding-right: 20px;">
 
   <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon" (click)="handleButtonClick()">Invite Users
     <mat-icon><span class="material-symbols-outlined">
@@ -174,3 +159,26 @@
   <button mat-button mat-dialog-close>Cancel</button>
   <!-- <button mat-button [mat-dialog-close]="true" cdkFocus  Initial>Install</button> -->
 </mat-dialog-actions>
+
+
+
+
+
+
+
+
+
+      <!-- <div class="row">
+<mat-form-field class="addcom_form">
+  <mat-label>Select Channel</mat-label>
+  <mat-select (selectionChange)="someMethod($event.value)">
+    <ng-container *ngFor="let food of foods">
+      <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+    </ng-container>
+  </mat-select>
+</mat-form-field>
+</div>
+<small class="text-muted" [ngClass]="textdisplay ? 'hideText' : 'showTextBody'">Please Select to Add Member</small>
+<div>
+  <hr class="hr-text" data-content="Add Member For Community" [ngClass]="status ? 'success' : 'danger'">
+</div> -->

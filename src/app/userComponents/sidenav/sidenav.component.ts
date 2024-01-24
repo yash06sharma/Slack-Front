@@ -55,7 +55,7 @@ interface NavItem {
 export class SidenavComponent implements OnInit{
 
   @Output() onToggleSideNav: EventEmitter<SidenavToggle> = new EventEmitter();
-
+  addChannel_Opetion:boolean = false;
   collapsed = false;
   // navData = navbarData;
   screenWidth  = 0;
@@ -114,27 +114,32 @@ export class SidenavComponent implements OnInit{
    }
 
    getChaanelData(){
+
      this.db.ch_subject.subscribe((result:any[])=>{
+      this.Add_Channel_Data = result;
+      console.log(result[0]);
        if(result[0]){
          this.channeldata = result[0]['Channels'].map((element: any)=>{
            return {
              id: element.ChannelID,
              icon: '0',
-                        routeLink: 'members',
+                        routeLink: 'channels',
                         label: element.ChannelName,
                       };
       });
       this.userdata = result[0]['CommunityMembers'].map((element: any)=>{
         return {
-                   id: element.ID,
+                   id: element.user_ID,
                    icon: '0',
                    routeLink: 'members',
                    label: element.Name,
                  };
                 });
               }
+              console.log("Side Nav Data");
               console.log(this.channeldata);
               console.log(this.userdata);
+              this.addChannel_Opetion = true;
               this.addDataToNavData();
               // this._changeDetectorRef.detectChanges();
   });
@@ -160,6 +165,7 @@ export class SidenavComponent implements OnInit{
 
   addDataToNavData(): void {
     if(this.channeldata != null){
+      this.navData[1].items = [];
       this.channeldata.forEach(element => {
         const newItem: NavItem = {
           id: element.id,
@@ -167,14 +173,15 @@ export class SidenavComponent implements OnInit{
           icon: element.icon,
           label: element.label,
         };
-
         this.navData[1].items.push(newItem);
       });
 
     }
 
-
+    if(this.userdata != null){
+    this.navData[2].items = [];
     this.userdata.forEach(element => {
+
       const newItem: NavItem = {
         id: element.id,
         routeLink: element.routeLink,
@@ -184,10 +191,11 @@ export class SidenavComponent implements OnInit{
 
       this.navData[2].items.push(newItem);
     });
+  }
 
 
-    this._changeDetectorRef.detectChanges();
-    this._changeDetectorRef.markForCheck();
+    // this._changeDetectorRef.detectChanges();
+    // this._changeDetectorRef.markForCheck();
   }
 
   togglecollapse(){
@@ -239,10 +247,13 @@ select(item: any, text:string): void {
 
 
 //---------------Add Cannels code-------------
-
+Add_Channel_Data:any[] = [];
 chennel_disp: boolean = false;
 openDialog(){
-  const dialogRef = this.dialog.open(AddChannelComponent);
+  const dialogRef = this.dialog.open(AddChannelComponent,{
+    // disableClose: true,
+            data :{'result':this.Add_Channel_Data}
+  });
   dialogRef.afterClosed().subscribe(result => {
     console.log(`Dialog result: ${result}`);
     });

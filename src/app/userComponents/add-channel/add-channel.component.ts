@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserServiceService } from 'src/app/servicess/user-service.service';
+
 
 @Component({
   selector: 'app-add-channel',
@@ -9,25 +11,29 @@ import { UserServiceService } from 'src/app/servicess/user-service.service';
 })
 export class AddChannelComponent implements OnInit {
 
-  constructor(private fb:FormBuilder, private db:UserServiceService) { }
+  constructor(private fb:FormBuilder, private db:UserServiceService,
+    public dialogRef: MatDialogRef<AddChannelComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    ) {
+
+  }
 
 createChannelForm!:FormGroup;
 submitted:boolean = false;
-
+dataForChannle:any[] = [];
   ngOnInit(): void {
+    //----------Trial-----------
+    this.dataForChannle = this.data.result;
+    this.getdataOfSingleCommunity_withchannel();
+
+
+
+    //----------Trial End---------
     this.createChannelRegisterFuntion();
     this.merge_communityMember_data();
   }
 
-  foods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
-
-
-
-
+//--------------------Create Channel------------------
   createChannelRegisterFuntion(){
     this.createChannelForm = this.fb.group({
       ch_name:['',[Validators.required]],
@@ -57,12 +63,27 @@ submitted:boolean = false;
     this.createChannelForm.reset();
   }
 
+//---------------End Create Channel-------------------
 
 
   //---------Select Channel-------------
-
+channel_Member_List:any[] = [];
   selectChannel(data:any){
     console.log(data);
+    if(this.dataForChannle){
+      this.channel_Member_List = this.dataForChannle[0]['Channels']['Members'].map((element: any)=>{
+        return {
+          id: element.user_ID,
+          label: element.Name,
+                };
+   });
+      console.log(this.channel_Member_List);
+      // console.log(this.dataForChannle[0]);
+
+    }
+
+
+
   }
 
 
@@ -86,7 +107,7 @@ merge_communityMember_data(){
   memberFilter(srch_member:any){
     const foundUser = this.selected_community_member.find(user => user.name === srch_member.target.value);
     if (foundUser) {
-      this.users = [foundUser]; // Wrap the single user in an array
+      this.users = [foundUser];
     }else{
       this.merge_communityMember_data();
     }
@@ -104,7 +125,28 @@ merge_communityMember_data(){
 
 
 
+//----------Trial----------------
+  channel_List_data:{ id: number; label: string}[]  = [];
+  // users: { id: number; name: string; email:string }[] = [];  //------------End Trial-----------
 
+
+getdataOfSingleCommunity_withchannel(){
+  if(this.dataForChannle){
+    this.channel_List_data = this.dataForChannle[0]['Channels'].map((element: any)=>{
+      return {
+        id: element.ChannelID,
+        label: element.ChannelName,
+                 };
+ });
+    console.log(this.channel_List_data);
+    // console.log(this.dataForChannle[0]);
+
+  }
+
+
+}
+
+//--------------Trial------------
 
 
 

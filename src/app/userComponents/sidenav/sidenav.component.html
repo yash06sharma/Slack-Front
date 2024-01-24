@@ -66,7 +66,11 @@
 
       <div [ngClass]="chennel_disp ? 'channelHide' : 'nav-add-channel'">
         <a class="sidenav-nav-link" (click)="openDialog()">
-              <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">Add Channel</span>
+              <!-- <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">Add Channel</span> -->
+              <div *ngIf="addChannel_Opetion">
+                <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">Add Channel</span>
+              </div>
+
 
         </a>
 
