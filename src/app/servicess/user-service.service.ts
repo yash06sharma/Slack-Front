@@ -36,6 +36,12 @@ export class UserServiceService {
   }
 
 
+  send_multiple_Email(data:any[]){
+    return this.http.post('http://127.0.0.1:8000/api/user/notification',data);
+
+    console.log(data);
+  }
+
 
 
 

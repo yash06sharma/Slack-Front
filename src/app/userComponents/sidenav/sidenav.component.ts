@@ -57,37 +57,30 @@ export class SidenavComponent implements OnInit{
   @Output() onToggleSideNav: EventEmitter<SidenavToggle> = new EventEmitter();
   addChannel_Opetion:boolean = false;
   collapsed = false;
-  // navData = navbarData;
   screenWidth  = 0;
 
   //--------------Nav Data Practicle-------------
 
-    channeldata:{ id: number, icon: string, routeLink: string, label:string }[] = [
-      // { id: 1, icon: '1', routeLink: 'members', label: 'user1' },
-      // { id: 2, icon: '2', routeLink: 'members', label: 'user2' },
-    ];
-    userdata: { id: number; icon: string; routeLink: string, label:string }[] = [
-      // { id: 1, icon: '1', routeLink: 'members', label: 'user1' },
-      //   { id: 2, icon: '2', routeLink: 'members', label: 'user2' },
-    ];
+    channeldata:{ id: number, icon: string, routeLink: string, label:string }[] = [];
+    userdata: { id: number; icon: string; routeLink: string, label:string }[] = [];
 
 
   navData : {routeLink: any, icon: string, label: string, items: NavItem[] }[] = [
     {
       routeLink: 'dashboard',
-      icon: 'fal fa-chat-bar',
+      icon: 'fal fa-times close-icon',
       label: 'Dashboard',
       items: [],
     },
     {
       routeLink: null,
-      icon: 'material-symbols-outlined',
+      icon: 'fa-solid fa-fire-flame-curved',
       label: 'Channels',
       items: [],
     },
     {
       routeLink: null,
-      icon: 'fal fa-chat-bar',
+      icon: 'fa-duotone fa-fire',
       label: 'Direct Message',
       items: [],
     },
@@ -141,26 +134,16 @@ export class SidenavComponent implements OnInit{
               console.log(this.userdata);
               this.addChannel_Opetion = true;
               this.addDataToNavData();
-              // this._changeDetectorRef.detectChanges();
   });
 
 
    }
-
-
-
-
-
-
-
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.addDataToNavData();
     this.add_Community_menuItem();
      console.log(this.channeldata);
-
-
   }
 
   addDataToNavData(): void {
@@ -193,9 +176,6 @@ export class SidenavComponent implements OnInit{
     });
   }
 
-
-    // this._changeDetectorRef.detectChanges();
-    // this._changeDetectorRef.markForCheck();
   }
 
   togglecollapse(){
@@ -208,8 +188,6 @@ export class SidenavComponent implements OnInit{
     this.onToggleSideNav.emit({collapsed: this.collapsed,screenWidth: this.screenWidth});
 
   }
-
-
 
   metItemData = [
     { id: 1, communityName: 'Software'},

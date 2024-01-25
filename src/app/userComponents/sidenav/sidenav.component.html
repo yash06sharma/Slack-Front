@@ -3,18 +3,19 @@
 <div class="logo-container">
   <button class="logo" (click)="togglecollapse()">YS</button>
   <div @fadeInOut *ngIf="collapsed">
-    <!-- Angular -->
-    <button  class="logo-text"  mat-button [matMenuTriggerFor]="menu">
-    <!-- <span class="logo-text">
-    </span> -->
-    {{comm_name}}
+
+    <!-- <button  class="logo-text"  mat-button [matMenuTriggerFor]="menu"> -->
+    <span class="logo-text"> Slack
+    </span>
+
+    <!-- {{comm_name}}
     </button>
     <mat-menu #menu="matMenu">
       <ng-container *ngFor="let item of menuItems">
         <button *ngIf="!item.elementRef" mat-menu-item (click)="select(item.id,item.text)">{{ item.text }}</button>
         <button *ngIf="item.elementRef" mat-menu-item [matMenuTriggerFor]="item.elementRef">{{ item.text }}</button>
       </ng-container>
-    </mat-menu>
+    </mat-menu> -->
   </div>
 
   <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
@@ -39,7 +40,7 @@
       <li class="sidenav-nav-item" *ngFor="let x of navData">
         <div *ngIf="x.items.length == 0 && x.routeLink != null">
           <a [routerLink]="[x.routeLink]"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidenav-nav-link">
-            <i class="sidenav-link-icon" [class]="[x.icon]"></i>
+            <i class="sidenav-link-icon " [class]="[x.icon]"></i>
           <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{x.label}}</span>
 
           </a>

@@ -82,7 +82,8 @@ community_name_AfterCreate(){
     return this.registerChannel.controls;
   }
 
-  community_ID:number = 0;
+  community_ID:number = 2;
+  community_Name:string ="Team Software";
 
   submitChannelBTN(){
     this.submitted = true;
@@ -134,14 +135,20 @@ community_name_AfterCreate(){
 
 
 
-
-  channel_Id:any= 1;
+  created_by:string = 'Yash'
+  channel_Id:any= 3;
+  channelName:string = "Jordan";
   handleButtonClick() {
     const selectedRoles = this.users
       .filter(user => user.role !== '')
-      .map(user => ({ id: user.id, role: user.role, channel_ID: this.channel_Id, }));
+      .map(user => ({ id: user.id, role: user.role,email:user.email, channel_ID: this.channel_Id,
+        channel_Name: this.channelName, community_ID: this.community_ID,
+        community_Name: this.community_Name, created_by: this.created_by}));
 
     console.log('Selected Roles:', selectedRoles);
+    this.db.send_multiple_Email(selectedRoles).subscribe((res)=>{
+      console.log(res);
+    })
 
   }
 
