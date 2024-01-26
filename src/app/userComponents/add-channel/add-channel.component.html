@@ -48,7 +48,7 @@
 
 
         <mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="onNgModelChange($event)">
-          <mat-list-option *ngFor="let user of users" [value]="user.user_ID">
+          <mat-list-option *ngFor="let user of users" [value]="{ user_id: user.user_ID }">
             {{user.Name}}
           </mat-list-option>
       </mat-selection-list>

@@ -15,7 +15,7 @@ export class AuthServiceService {
   }
 
   login_Post_API(data:any){
-    console.log(data);
+    console.log("Login Data go by services",data);
     return this.http.post('http://127.0.0.1:8000/api/login/',data)
   }
 }

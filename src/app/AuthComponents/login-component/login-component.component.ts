@@ -14,13 +14,18 @@ export class LoginComponentComponent implements OnInit {
 submitted:boolean = false;
 
   ngOnInit(): void {
+    localStorage.removeItem('Token');
+    localStorage.removeItem('Auth');
+    localStorage.removeItem('community-data');
+    localStorage.removeItem('Channel');
+
     this.userloginForm();
   }
 
   userloginForm(){
     this.loginForm = this.fb.group({
-      emailID:['',[Validators.required, Validators.email,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      passwordID:['',[Validators.required]],
+      email:['',[Validators.required, Validators.email,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      password:['',[Validators.required]],
     })
   }
 
@@ -35,9 +40,21 @@ submitted:boolean = false;
       //  this.submitted = false;
       return;
     }
-    this.db.login_Post_API(this.loginForm.value).subscribe((res)=>{
+
+    this.db.login_Post_API(this.loginForm.value).subscribe((res:any)=>{
       console.log(res);
-      console.log("Data Submitted");
+      const { Token, credentials } = res;
+
+      localStorage.setItem('Token', Token);
+      localStorage.setItem('Auth', JSON.stringify(credentials));
+
+      // ---------------get Authentication from local----------------
+
+       console.log(localStorage.getItem('Token'));
+       const storedCredentials = JSON.parse(localStorage.getItem('Auth') || '{}');
+       console.log(storedCredentials.id);
+       console.log(storedCredentials.name);
+
     })
     this.loginForm.reset();
     // console.log(this.loginForm.value);

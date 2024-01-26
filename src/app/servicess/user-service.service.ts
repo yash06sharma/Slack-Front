@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 
@@ -17,22 +17,23 @@ export class UserServiceService {
 
   addCommunity_Channel_funtion(data:any){
     console.log(data);
-    return this.http.post('http://127.0.0.1:8000/api/addchannel/'+data.id,data);
+
+    return this.http.post('http://127.0.0.1:8000/api/addchannel/'+data.community_ID,data);
   }
 
-  showDashboard_Data(){
-    return this.http.get('http://127.0.0.1:8000/api/community/');
+  showDashboard_Data(id:number){
 
-  }
-
-
-  show_SelectedCommunity_Data(id:number){
     return this.http.get('http://127.0.0.1:8000/api/community/'+id);
 
   }
 
-  get_FrstCommunity_Created_Member(){
-    return this.http.get('http://127.0.0.1:8000/api/user/community_member/');
+
+  show_SelectedCommunity_Data(data:any){
+    return this.http.get(`http://127.0.0.1:8000/api/community/${data.user_id}/${data.comm_id}/`);
+  }
+
+    get_FrstCommunity_Created_Member(id:number){
+    return this.http.get('http://127.0.0.1:8000/api/user/community_member/'+id);
   }
 
 
@@ -42,7 +43,10 @@ export class UserServiceService {
     console.log(data);
   }
 
-
+  Add_Member_For_channel(data:any){
+    console.log("channel for data",data);
+    return this.http.post('http://127.0.0.1:8000/api/user/channel/',data);
+  }
 
 
 

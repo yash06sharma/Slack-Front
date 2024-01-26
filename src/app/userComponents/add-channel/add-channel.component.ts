@@ -29,24 +29,32 @@ dataForChannle:any[] = [];
   }
 
 
-  updateCommunity_Data(){
-    this.db.show_SelectedCommunity_Data(1).subscribe((res:any)=>{
-      this.dataForChannle  = res['community'];
-      console.log("Data from server",res['community']);
-      this.handleDataForChannel();
+  updated_Data:any[] = [];
+  updateCommunity_Data(comm_id:number){
+    const storedCredentials = JSON.parse(localStorage.getItem('Auth') || '{}');
+   if(storedCredentials){
+    var data = {
+      user_id: storedCredentials.id,
+       comm_id:comm_id,
+    }
+    this.db.show_SelectedCommunity_Data(data).subscribe((res:any)=>{
+      this.updated_Data = res['community'];
 
+
+      this.dataForChannle  = this.updated_Data;
+      console.log("Data from server",this.updated_Data);
     });
-
+  }
+  this.handleDataForChannel();
   }
 
   datacomeFromDialog(){
     this.dataForChannle = this.data.result;
+    console.log("Data from model",this.data.result);
   }
 
   handleDataForChannel() {
     this.getdataOfSingleCommunity_withchannel();
-    // You can use this.dataForChannle or perform further operations
-    // console.log("Data in dialog", this.dataForChannle);
   }
 
 //--------------------Create Channel------------------
@@ -62,30 +70,31 @@ dataForChannle:any[] = [];
 
     submit_Channel_btn(){
         this.submitted = true;
+        const communityData = JSON.parse(localStorage.getItem('community-data') || '{}');
         if(this.createChannelForm.invalid){
           return ;
         }
-    //----------------community_ID Which is come from Top level Selected community id by Admin---------
-    // var channel_Data = {
-    //   id: 2,//----------Community ID Require in this place
-    //   name:this.createChannelForm.value.ch_name,
-    // }
-    // this.db.addCommunity_Channel_funtion(channel_Data).subscribe((res)=>{
-    //   console.log(res);
-    // });
+        var channel_Data = {
+              community_ID: communityData.id,
+              name:this.createChannelForm.value.ch_name,
+            }
+            this.db.addCommunity_Channel_funtion(channel_Data).subscribe((res)=>{
+              console.log(res);
+              if(res != null){
 
-    console.log(this.createChannelForm.value.ch_name);
+                this.updateCommunity_Data(communityData.id);//-----------------Updated data get from server
+              }
 
-    this.createChannelForm.reset();
-    // this.updateCommunity_Data();//-----------------Updated data get from server
-  }
+            });
 
-//---------------End Create Channel-------------------
-
+            this.createChannelForm.reset();
+      }
 
     //---------Select Channel-------------
   channel_Member_Not_Exist:any[] = [];
+  channel_data_on_select:any;
     selectChannel(data:any){
+      this.channel_data_on_select = data;
       // console.log(data);
               if (this.dataForChannle) {
                 var channel_Member_exist = this.dataForChannle[0]['Channels']
@@ -105,20 +114,22 @@ dataForChannle:any[] = [];
                     return {
                       user_ID: element.user_ID,
                       Name: element.Name,
+                      Status: element.Status,
                            };
               });
+              console.log("Community Member", comm_Member);
 
               this.channel_Member_Not_Exist = comm_Member.filter((commMember: any) =>
                 channel_Member_exist.every((channelMember: any) =>
-                channelMember.user_ID !== commMember.user_ID)
+                channelMember.user_ID !== commMember.user_ID && commMember.Status !== 'Pending')
               );
-
+              console.log("Community not exist", this.channel_Member_Not_Exist);
       this.merge_communityMember_data();
     }
 
 
     users: { user_ID: number; Name: string}[] = [];
-    selectedOptions:any=[];
+    selectedOptions:{user_id:number}[]=[];
     selectedOption:any;
 
   merge_communityMember_data(){
@@ -136,37 +147,37 @@ dataForChannle:any[] = [];
       this.merge_communityMember_data();
     }
   }
+    onNgModelChange(event:any[]){
+      console.log(event);
+      this. selectedOptions = event;
 
+    }
 
-  onNgModelChange(event:any){
-    // console.log(event);
-    this.selectedOption=event;
-  }
-
-  addUserOnClick(){
-    console.log(this.selectedOption);
-  }
+    addUserOnClick(){
+      const work =  this.selectedOptions.map((user: any) => ({ user_id: user.user_id, channel_id: this.channel_data_on_select}));
+          console.log(work);
+            this.db.Add_Member_For_channel(work).subscribe((res)=>{
+              console.log(res);
+            })
+    }
 
 
 
   channel_List_data:{ id: number; label: string}[]  = [];
 
+    getdataOfSingleCommunity_withchannel(){
+          if(this.dataForChannle){
+              this.channel_List_data = this.dataForChannle[0]['Channels'].map((element: any)=>{
+                return {
+                  id: element.ChannelID,
+                  label: element.ChannelName,
+                        };
+              });
 
-getdataOfSingleCommunity_withchannel(){
-  if(this.dataForChannle){
-    this.channel_List_data = this.dataForChannle[0]['Channels'].map((element: any)=>{
-      return {
-        id: element.ChannelID,
-        label: element.ChannelName,
-                 };
- });
-
-  }
+          }
 
 
-}
-
-//--------------Trial------------
+    }
 
 
 

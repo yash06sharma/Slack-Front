@@ -15,11 +15,24 @@ export class AddCommunityComponent implements OnInit {
   constructor(private fb:FormBuilder, private db:UserServiceService) { }
 
   ngOnInit(): void {
+    this.Admin_detail_For_AddCommunity();
     this.getdataForCommunityMember();
     this.addCommunityForm();
     this.addChannelForm();
   }
 
+  Admin_userID:number = 0;
+  Admin_userName:string = '';
+  Admin_detail_For_AddCommunity(){
+       const storedCredentials = JSON.parse(localStorage.getItem('Auth') || '{}');
+      if(storedCredentials){
+      this.Admin_userID = storedCredentials.id;
+      this.Admin_userName = storedCredentials.name;
+      console.log("Get By LocalStorage Admin Detail");
+      console.log(storedCredentials);
+    }
+
+  }
 
   addCommunityForm(){
     this.registerCommunity = this.fb.group({
@@ -37,8 +50,9 @@ export class AddCommunityComponent implements OnInit {
     if(this.registerCommunity.invalid){
       return ;
     }
+
     var data = {
-      id: 2, name:this.registerCommunity.value.name,
+      id: this.Admin_userID, name:this.registerCommunity.value.name,
       description: this.registerCommunity.value.description
     }
     this.db.addCommunityfuntion(data).subscribe((res)=>{
@@ -55,6 +69,7 @@ export class AddCommunityComponent implements OnInit {
 
 
   community_name = '';
+  community_ID:number = 2;//-----------Edit krna he
 
 community_name_AfterCreate(){
   const communityData = JSON.parse(localStorage.getItem('community-data') || '{}');
@@ -82,8 +97,7 @@ community_name_AfterCreate(){
     return this.registerChannel.controls;
   }
 
-  community_ID:number = 2;
-  community_Name:string ="Team Software";
+  community_Name:string ='';
 
   submitChannelBTN(){
     this.submitted = true;
@@ -96,10 +110,28 @@ community_name_AfterCreate(){
     }
     this.db.addCommunity_Channel_funtion(channel_Data).subscribe((res)=>{
       console.log(res);
+      localStorage.setItem('Channel', JSON.stringify(res));
+      this.channel_name_AfterCreate();
     });
 
     this.registerChannel.reset();
   }
+
+  channel_name = '';
+  channel_ID:number = 0;//-----------Edit krna he
+
+channel_name_AfterCreate(){
+  const Channel = JSON.parse(localStorage.getItem('Channel') || '{}');
+   if(Channel){
+    this.channel_name = Channel.Data.name;
+    this.channel_ID = Channel.Data.id;
+    console.log("Get By LocalStorage Channel Data");
+    console.log(Channel);
+
+  }
+
+}
+
 
 //-------------Select Member-----------
 
@@ -108,8 +140,9 @@ community_name_AfterCreate(){
   users: { id: number; name: string; role: string, email:string }[] = [];
 
   getdataForCommunityMember(){
-    this.db.get_FrstCommunity_Created_Member().subscribe((res:any)=>{
+    this.db.get_FrstCommunity_Created_Member(this.Admin_userID).subscribe((res:any)=>{
       this.data = res.Data;
+      console.log(res.Data);
       this.merge_data();
 
     })
@@ -134,45 +167,23 @@ community_name_AfterCreate(){
   //-------------Select Member End-----------
 
 
-
-  created_by:string = 'Yash'
-  channel_Id:any= 3;
-  channelName:string = "Jordan";
   handleButtonClick() {
+
     const selectedRoles = this.users
       .filter(user => user.role !== '')
-      .map(user => ({ id: user.id, role: user.role,email:user.email, channel_ID: this.channel_Id,
-        channel_Name: this.channelName, community_ID: this.community_ID,
-        community_Name: this.community_Name, created_by: this.created_by}));
+      .map(user => ({ user_id: user.id, role: user.role,email:user.email, channel_ID: this.channel_ID,
+        channel_Name: this.channel_name, community_ID: this.community_ID,
+        community_Name: this.community_name, created_by: this.Admin_userName}));
 
     console.log('Selected Roles:', selectedRoles);
-    this.db.send_multiple_Email(selectedRoles).subscribe((res)=>{
-      console.log(res);
-    })
+    if(selectedRoles !== null){
+      this.db.send_multiple_Email(selectedRoles).subscribe((res)=>{
+        console.log(res);
+      })
+    }
 
   }
 
 }
 
 
-  // textdisplay:boolean = false;
-
-  // status: boolean = true;
-  // someMethod(data:any){
-  //   this.status = false;
-  //   this.textdisplay = true;
-  //   console.log(data);
-  // }
-
-// selectedValue: string = '';
-  // foods = [
-  //   {value: 'steak-0', viewValue: 'Steak'},
-  //   {value: 'pizza-1', viewValue: 'Pizza'},
-  //   {value: 'tacos-2', viewValue: 'Tacos'},
-  // ];
-
-  // typesOfShoes: string[] = ['Yash', 'Suresh', 'Diptesh', 'Max', 'Anand'];
-
-  // onSelection(data:any){
-  //     console.log(data.option.selected);
-  // }

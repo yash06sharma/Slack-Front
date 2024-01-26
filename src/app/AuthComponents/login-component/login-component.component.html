@@ -22,22 +22,22 @@
     <form class="example-form" [formGroup]="loginForm" novalidate>
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Ex. example@gmail.com..." formControlName="emailID">
+        <input matInput placeholder="Ex. example@gmail.com..." formControlName="email">
       </mat-form-field>
 
-      <div *ngIf="submitted && log['emailID'].errors && log['emailID'].touched">
-        <div style="color: red;" *ngIf="log['emailID'].errors['required']">This field is required</div>
+      <div *ngIf="submitted && log['email'].errors && log['email'].touched">
+        <div style="color: red;" *ngIf="log['email'].errors['required']">This field is required</div>
       </div>
-      <div style="color: red;" *ngIf="log['emailID'].errors?.pattern">Please enter valid email address</div>
+      <div style="color: red;" *ngIf="log['email'].errors?.pattern">Please enter valid email address</div>
 
 
       <mat-form-field class="example-full-width">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Ex. ******" type="password" formControlName="passwordID">
+        <input matInput placeholder="Ex. ******" type="password" formControlName="password">
       </mat-form-field>
 
-      <div *ngIf="submitted && log['passwordID'].errors && log['passwordID'].touched">
-        <div style="color: red;" *ngIf="log['passwordID'].errors['required']">This field is required</div>
+      <div *ngIf="submitted && log['password'].errors && log['password'].touched">
+        <div style="color: red;" *ngIf="log['password'].errors['required']">This field is required</div>
       </div>
 
       <button type="submit" class="log_in_button" (click)="loginUserRecord()">Log in with Email</button>

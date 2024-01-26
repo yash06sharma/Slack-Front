@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit,OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // throw new Error('Method not implemented.');
     console.log("Change Happend");
   }
 
@@ -42,19 +41,29 @@ community_data: any[] = [];// userData: any = {};
 
 // data:any;
 
-show_community(){
-  this.db.showDashboard_Data().subscribe((res:any)=>{
-    this.community_data = res.community;
-    console.log(res);
+show_community(){    //----------For All Data of community
+  const storedCredentials = JSON.parse(localStorage.getItem('Auth') || '{}');
 
-  })
+  if(storedCredentials.id){
+    this.db.showDashboard_Data(storedCredentials.id).subscribe((res:any)=>{
+      this.community_data = res.community;
+      console.log(res);
+
+    })
+  }
 }
 
 
  CommunityItem:any[] = [];
 
-selected_community(ID:number){
-  this.db.show_SelectedCommunity_Data(ID).subscribe((res:any)=>{
+selected_community(com_id:number){  //-----------For single data of community
+  const storedCredentials = JSON.parse(localStorage.getItem('Auth') || '{}');
+  var data = {
+    user_id: storedCredentials.id,
+     comm_id:com_id,
+  }
+
+  this.db.show_SelectedCommunity_Data(data).subscribe((res:any)=>{
 
     var communityData = res['community'][0];
      this.CommunityItem = [{
@@ -68,6 +77,8 @@ selected_community(ID:number){
 
     this.db.ch_subject.next(this.CommunityItem);
     console.log(this.CommunityItem,);
+    localStorage.setItem('community-data', JSON.stringify(res['community'][0]));
+
 
     let data = {
       'Created_by': res['community'][0]['Created_by'],
